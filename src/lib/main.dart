@@ -73,13 +73,12 @@ class _MyAppState extends State<MyApp> {
             future: futureCat,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                debugPrint("------------------------------");
                 String imageUrl = snapshot.data!.url;
                 ui.platformViewRegistry.registerViewFactory(
                   imageUrl,
                   (int _) => ImageElement()
                   ..src = imageUrl
-                  ..style.objectFit = 'cover'
+                  ..style.objectFit = 'contain'
                 );
                 return HtmlElementView(
                   viewType: imageUrl,
