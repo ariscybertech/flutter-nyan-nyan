@@ -53,8 +53,18 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
+    rebuild();
     super.initState();
     futureCat = fetchCat();
+  }
+
+  void rebuild() {
+    Future.delayed(Duration(seconds: 5), () {
+      setState(() {
+        futureCat = fetchCat();
+      });
+      rebuild();
+    });
   }
 
   @override
@@ -83,8 +93,6 @@ class _MyAppState extends State<MyApp> {
                 return HtmlElementView(
                   viewType: imageUrl,
                 );
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
               }
               return CircularProgressIndicator();
             },
