@@ -50,21 +50,20 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late Future<Cat> futureCat;
+  Timer? _timer;
 
   @override
   void initState() {
-    rebuild();
     super.initState();
     futureCat = fetchCat();
+
+    _timer = Timer.periodic(Duration(seconds: 10), _onTimer);
   }
 
-  void rebuild() {
-    Future.delayed(Duration(seconds: 5), () {
+  void _onTimer(Timer timer) {
       setState(() {
         futureCat = fetchCat();
       });
-      rebuild();
-    });
   }
 
   @override
@@ -98,6 +97,48 @@ class _MyAppState extends State<MyApp> {
             },
           ),
         ),
+
+      floatingActionButton: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FloatingActionButton(
+            onPressed: (){
+              if(_timer != null){
+                _timer?.cancel();
+              }
+              setState(() {
+                futureCat = fetchCat();
+                _timer = Timer.periodic(Duration(seconds: 10), _onTimer);
+              });
+            },
+            tooltip: 'Change Cat',
+            child: Icon(Icons.refresh),
+          ),
+          FloatingActionButton(
+            onPressed: (){
+              if(_timer != null){
+                _timer?.cancel();
+              }
+            },
+            tooltip: 'Pause Cat',
+            child: Icon(Icons.pause),
+          ),
+        ],
+      ),
+
+        // refreshActionButton: FloatingActionButton(
+        //   onPressed: (){
+        //     if(_timer != null){
+        //       _timer?.cancel();
+        //     }
+        //     setState(() {
+        //       futureCat = fetchCat();
+        //       _timer = Timer.periodic(Duration(seconds: 10), _onTimer);
+        //     });
+        //   },
+        //   tooltip: 'Change Cat',
+        //   child: Icon(Icons.refresh),
+
       ),
     );
   }
