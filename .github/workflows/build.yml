@@ -17,10 +17,12 @@ jobs:
           submodules: true  # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
-      - name: Flutter Web Build
+      - name: Flutter Setup
         uses: subosito/flutter-action@v1
         with:
           flutter-version: '2.0.5'
+
+      - name: Flutter Web Build
         run: |
           cd ./src
           flutter pub get
