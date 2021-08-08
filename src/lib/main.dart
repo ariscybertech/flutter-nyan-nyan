@@ -5,6 +5,11 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart' show kIsWeb;
+
+
+// 広告用
+double adHeight = 100;
 
 Future<Cat> fetchCat() async {
   final response =
@@ -55,6 +60,14 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+
+    if (kIsWeb) {
+      // running on the web!
+      adHeight = 100;
+    } else {
+      adHeight = 0;
+    }
+
     futureCat = fetchCat();
 
     _timer = Timer.periodic(Duration(seconds: 10), _onTimer);
@@ -78,27 +91,35 @@ class _MyAppState extends State<MyApp> {
           title: Text('Nayn Nayn'),
         ),
         body: Center(
-          child: FutureBuilder<Cat>(
-            future: futureCat,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                String imageUrl = snapshot.data!.url;
-                ui.platformViewRegistry.registerViewFactory(
-                  imageUrl,
-                  (int _) => ImageElement()
-                  ..src = imageUrl
-                  ..style.objectFit = 'contain'
-                );
-                return HtmlElementView(
-                  viewType: imageUrl,
-                );
-              }
-              return CircularProgressIndicator();
-            },
+          child: Column(
+            children: [
+              FutureBuilder<Cat>(
+              future: futureCat,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  String imageUrl = snapshot.data!.url;
+                  ui.platformViewRegistry.registerViewFactory(
+                    imageUrl,
+                    (int _) => ImageElement()
+                    ..src = imageUrl
+                    ..style.objectFit = 'contain'
+                    ..style.maxHeight = 'calc(100% - 100px)'
+                  );
+                  return HtmlElementView(
+                    viewType: imageUrl,
+                  );
+                }
+                  return CircularProgressIndicator();
+                },
+              ),
+              Container(height: adHeight, color: Colors.red),
+            ],
           ),
         ),
 
-      floatingActionButton: Column(
+      floatingActionButton: Container(
+        padding: EdgeInsets.only(bottom: adHeight),
+        child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           FloatingActionButton(
@@ -124,6 +145,7 @@ class _MyAppState extends State<MyApp> {
             child: Icon(Icons.pause),
           ),
         ],
+      ),
       ),
 
         // refreshActionButton: FloatingActionButton(
