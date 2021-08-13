@@ -7,42 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-
-// 広告用
-double adHeight = 100;
-
-Future<Cat> fetchCat() async {
-  final response =
-      await http.get(Uri.parse('https://api.thecatapi.com/v1/images/search'));
-
-  if (response.statusCode == 200) {
-    List responseJson = json.decode(response.body);
-    return new Cat.fromJson(responseJson[0]);
-  } else {
-    throw Exception('Failed to load Cat');
-  }
-}
-
-class Cat {
-  final String id;
-  final String url;
-
-  Cat({
-    required this.id,
-    required this.url,
-  });
-
-  factory Cat.fromJson(Map<String, dynamic> json) {
-    var cat = Cat(
-      id: json['id'],
-      url: json['url'],
-    );
-
-    debugPrint("${cat.id}");
-    debugPrint("${cat.url}");
-    return cat;
-  }
-}
+import './cat.dart'; 
 
 void main() => runApp(MyApp());
 
@@ -54,8 +19,25 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  // Cat Image
   late Future<Cat> futureCat;
+  // Timer
   Timer? _timer;
+  // AdHight
+  double adHeight = 100;
+
+  // Cat Image Load
+  Future<Cat> fetchCat() async {
+    final response =
+        await http.get(Uri.parse('https://api.thecatapi.com/v1/images/search'));
+
+    if (response.statusCode == 200) {
+      List responseJson = json.decode(response.body);
+      return new Cat.fromJson(responseJson[0]);
+    } else {
+      throw Exception('Failed to load Cat');
+    }
+  }
 
   @override
   void initState() {
@@ -147,19 +129,6 @@ class _MyAppState extends State<MyApp> {
         ],
       ),
       ),
-
-        // refreshActionButton: FloatingActionButton(
-        //   onPressed: (){
-        //     if(_timer != null){
-        //       _timer?.cancel();
-        //     }
-        //     setState(() {
-        //       futureCat = fetchCat();
-        //       _timer = Timer.periodic(Duration(seconds: 10), _onTimer);
-        //     });
-        //   },
-        //   tooltip: 'Change Cat',
-        //   child: Icon(Icons.refresh),
 
       ),
     );
