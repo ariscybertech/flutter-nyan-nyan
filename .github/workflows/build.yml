@@ -24,11 +24,10 @@ jobs:
 
       - name: Flutter Web Build
         run: |
-          cd ./src
           flutter pub get
           flutter build web
-          rm -rf ../docs
-          mv -fv ./build/web ../docs/
+          rm -rf ./docs
+          mv -fv ./build/web ./docs
 
       # Commit
       - name: Update Flutter Web 
