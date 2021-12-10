@@ -1,7 +1,6 @@
 name: Flutter Build
 
-on:
-  push
+on: push
 
 jobs:
   windows:
