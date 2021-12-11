@@ -1,0 +1,15 @@
+name: Flutter Build
+
+on: push
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+        run: |
+          echo "Windows"
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+        run: |
+          echo "Ubuntu"

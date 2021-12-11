@@ -3,25 +3,25 @@ name: Flutter Build
 on: push
 
 jobs:
-  # windows:
-  #   runs-on: windows-latest
-  #   steps:
-  #     # Checkout
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
+  windows:
+    runs-on: windows-latest
+    steps:
+      # Checkout
+      - name: Checkout
+        uses: actions/checkout@v2
 
-  #     - name: Flutter Windows Build
-  #     - uses: subosito/flutter-action@v1
-  #       with:
-  #         channel: beta
-  #     - run: flutter config --enable-windows-desktop
-  #     - run: flutter build windows
+      - name: Flutter Windows Build
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: beta
+      - run: flutter config --enable-windows-desktop
+      - run: flutter build windows
 
-  #     # Commit
-  #     - name: Update Flutter Web 
-  #       uses: stefanzweifel/git-auto-commit-action@v4.2.0
-  #       with:
-  #         commit_message: Update Build Files
+      # Commit
+      - name: Update Flutter Web 
+        uses: stefanzweifel/git-auto-commit-action@v4.2.0
+        with:
+          commit_message: Update Build Files
 
   web:
     # Ubuntus
