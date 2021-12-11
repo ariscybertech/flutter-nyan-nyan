@@ -3,13 +3,17 @@ name: Flutter Build
 on: push
 
 jobs:
-  windows:
+  build:
     runs-on: windows-latest
     steps:
-        run: |
-          echo "Windows"
-  linux:
+      - run: echo "windows"
+  test:
     runs-on: ubuntu-latest
+    needs: build
     steps:
-        run: |
-          echo "Ubuntu"
+      - run: echo "ubuntu"
+  publish:
+    runs-on: macos-latest
+    needs: test
+    steps:
+      - run: echo "macos"
