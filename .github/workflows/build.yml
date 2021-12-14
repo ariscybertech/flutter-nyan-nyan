@@ -6,12 +6,7 @@ jobs:
   windows:
     runs-on: windows-latest
     steps:
-      # Checkout
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      # Flutter Windows Build
-      - name: Flutter Windows Build
+      - uses: actions/checkout@v2
       - uses: subosito/flutter-action@v1
         with:
           channel: beta
