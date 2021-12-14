@@ -1,4 +1,4 @@
-name: Flutter Build
+name: OS echo 
 
 on: push
 
