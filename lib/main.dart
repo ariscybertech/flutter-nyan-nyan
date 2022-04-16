@@ -80,13 +80,13 @@ class _MyAppState extends State<MyApp> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   String imageUrl = snapshot.data!.url;
-                  ui.platformViewRegistry.registerViewFactory(
-                    imageUrl,
-                    (int _) => ImageElement()
-                    ..src = imageUrl
-                    ..style.objectFit = 'contain'
-                    ..style.maxHeight = 'calc(100% - 100px)'
-                  );
+                  // ui.platformViewRegistry.registerViewFactory(
+                  //   imageUrl,
+                  //   (int _) => ImageElement()
+                  //   ..src = imageUrl
+                  //   ..style.objectFit = 'contain'
+                  //   ..style.maxHeight = 'calc(100% - 100px)'
+                  // );
                   return HtmlElementView(
                     viewType: imageUrl,
                   );
